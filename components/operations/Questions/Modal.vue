@@ -8,33 +8,41 @@ watchEffect(() => {
   console.log("watch 2", props.expression)
 })
 
+const resultClass = ref('border-4 border-gray-400 shadow-[0_0_20px,inset_0_0_20px] shadow-gray-400')
+
+const answered = (st) => {
+  if(st === true) {
+    resultClass.value = 'border-4 border-green-500 shadow-[0_0_20px,inset_0_0_20px] shadow-green-500'
+  } else {
+    resultClass.value = 'border-4 border-red-500 shadow-[0_0_20px,inset_0_0_20px] shadow-red-500'
+  }
+  setTimeout(() => {
+    resultClass.value = 'border-4 border-gray-400 shadow-[0_0_20px,inset_0_0_20px] shadow-gray-400'
+  }, 500)
+}
+
 </script>
 
 <template>
-  <div x-data="{ isOpen: true }" class="relative flex justify-center">
+  <div x-data="{ isOpen: true }" class="relative flex justify-center w-full h-full">
 
     <Transition type="transition" enter-active-class="transition duration-300 ease-out"
       enter-from-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
       enter-to-class="translate-y-0 opacity-100 sm:scale-100" leave-active-class="transition duration-150 ease-in"
       leave-from-class="translate-y-0 opacity-100 sm:scale-100"
       leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95">
-      <div v-show="isOpen" class="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
-        aria-modal="true">
         <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
           <div
-            class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl rtl:text-right dark:bg-gray-900 sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+            :class="resultClass"
+            class="transition-shadow duration-500 relative inline-block p-20 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl rtl:text-right dark:bg-gray-900 sm:my-8 sm:align-middle sm:max-w-lg sm-max-h-lg sm:w-full">
             <div>
               <OperationsQuestionsRenderQuestion 
                 :expression="props.expression"
+                @answered="answered"
               />
             </div>
-              <div v-if="props.expression.staus != null" class="w-full h-full absolute top-0 left-0 border-1 z-20 flex justify-center items-center bg-slate-800/[.8]">
-                <OperationsQuestionsRightWrong 
-                  :expression="props.expression"
-                />
-              </div>
 
             <div class="mt-5 sm:flex sm:items-center sm:justify-between">
 
@@ -52,7 +60,6 @@ watchEffect(() => {
             </div>
           </div>
         </div>
-      </div>
     </Transition>
   </div>
 </template>

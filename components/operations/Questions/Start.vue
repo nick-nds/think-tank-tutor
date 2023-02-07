@@ -20,7 +20,7 @@ const start = () => {
     cursor: pointer;
     -webkit-box-shadow:0 0 50px blue; 
     -moz-box-shadow: 0 0 50px blue; 
-    box-shadow:0 0 50px blue;
+    box-shadow:0 0 100px #ff9900;
     transform: translate(-50%, -50%);
     -webkit-animation-name: inner-center-div;
     -webkit-animation-duration: 4s; 
@@ -28,7 +28,10 @@ const start = () => {
     animation-name: inner-center-div;
     animation-duration: 4s;
     animation-iteration-count: infinite;
-    border: 2px solid rgb(107, 180, 243);
+    border: 2px solid #ff9900;
+    background-image: radial-gradient(#995c00, #b36b00, #e68a00, #ff9900)
+    /* background-image: radial-gradient(#0040ff, #0080ff, #00bfff, #00ffff) */
+    /* background-color: #FF5F1F; */
 }
 
 #start-div div {

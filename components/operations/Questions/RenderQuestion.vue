@@ -8,26 +8,29 @@ const expressions = inject('expressions')
 const actions = inject('actions')
 const currentQuestion = computed(() => actions.value.currentQuestion)
 
+const answerInput = ref('')
+
 console.log("ex", props.expression)
 
 const inputAnswer = (e) => {
   if(e.keyCode === 13) {
     submitAnswer(e.target.value)
+    answerInput.value = ''
   }
 }
+
+const emit = defineEmits(['answered'])
 
 const submitAnswer = (val) => {
   const ans = useRound(Number(val))
   if(ans == props.expression.value) {
-    console.log("correct")
     expressions.value[currentQuestion.value].status = true
+    emit('answered', true)
   } else {
+    emit('answered', false)
     expressions.value[currentQuestion.value].status = false
   }
-  setTimeout(() => {
-    actions.value.currentQuestion += 1
-  }, 3000)
-  console.log(ans, props.expression.value)
+  actions.value.currentQuestion += 1
 }
 
 </script>
@@ -55,6 +58,7 @@ const submitAnswer = (val) => {
       </span>
     </div>
       <input type="text" placeholder="Answer"
+        v-model="answerInput"
         class="w-30 mx-1 mt-2 placeholder-gray-400/70 dark:placeholder-gray-500 border-0 border-b border-gray-200 bg-white px-2 py-1 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" 
         @keyup="inputAnswer($event)"
       />
