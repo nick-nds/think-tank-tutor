@@ -18,5 +18,8 @@ console.log("inject params", parameters.value)
     <div class="my-4">
       <OperationsSidebarDataModal />
     </div>
+    <div class="my-6">
+      <OperationsSidebarActions />
+    </div>
   </div>
 </template>

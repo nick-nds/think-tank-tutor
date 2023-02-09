@@ -4,9 +4,16 @@ import { ref, inject, Transition, watchEffect } from 'vue'
 const props = defineProps(['expression'])
 const isOpen = ref(true)
 
+const actions = inject('actions')
+
 watchEffect(() => {
   console.log("watch 2", props.expression)
 })
+
+const ltrClick = () => {
+  console.log("click", actions.value.direction)
+  actions.value.direction = !actions.value.direction
+}
 
 const resultClass = ref('border-4 border-gray-400 shadow-[0_0_20px,inset_0_0_20px] shadow-gray-400')
 
@@ -45,18 +52,19 @@ const answered = (st) => {
             </div>
 
             <div class="mt-5 sm:flex sm:items-center sm:justify-between">
+              <button @click="actions.direction = !actions.direction" class="flex items-center px-4 py-2 font-medium tracking-wide text-rose-600 capitalize transition-colors duration-300 border-2 border-transparent hover:text-rose-900 hover:border-2 hover:border-rose-900 transform rounded-lg">
+                <span v-if="actions.direction" class="mx-2">LTR</span>
+                <span v-else class="mx-2">RTL</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" 
+                  class="w-4 h-4 stroke-0"
+                >
+                  <path v-if="actions.direction" stroke-linecap="round" stroke-linejoin="round"
+                    d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                  <path v-else stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg>
+              </button>
 
-              <div class="sm:flex sm:items-center ">
-                <button @click="isOpen = false"
-                  class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40">
-                  Pause
-                </button>
-
-                <button
-                  class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:w-auto sm:mt-0 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
-                  Next
-                </button>
-              </div>
             </div>
           </div>
         </div>

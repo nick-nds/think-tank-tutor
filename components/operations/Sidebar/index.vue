@@ -10,10 +10,6 @@
       <div class="mt-8 space-y-4">
         <OperationsSidebarParameter />
       </div>
-
-      <div class="mt-8">
-        <OperationsSidebarActions />
-      </div>
     </div>
   </aside>
 </template>

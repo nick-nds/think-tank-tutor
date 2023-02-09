@@ -6,7 +6,12 @@ import { inject, computed, onMounted } from 'vue'
 const expressions = inject('expressions')
 const actions = inject('actions')
 
-const attempted = computed(() => expressions.value.slice(0, actions.value.currentQuestion))
+const attempted = computed(() => {
+  if(expressions.value.length > 0) {
+    return expressions.value.slice(0, actions.value.currentQuestion)
+  }
+  return attempted.value
+})
 
 </script>
 

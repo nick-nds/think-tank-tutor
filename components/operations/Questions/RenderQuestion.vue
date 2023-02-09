@@ -11,12 +11,25 @@ const currentQuestion = computed(() => actions.value.currentQuestion)
 
 const answerInput = ref('')
 
-console.log("ex", props.expression)
-
 const inputAnswer = (e) => {
   if(e.keyCode === 13) {
     submitAnswer(e.target.value)
     answerInput.value = ''
+  }
+  const keyPress = (e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || e.which == 8 || e.which == 46 || e.which == 35 || e.which == 36 || e.which == 45)
+  if (e.which == 17) {
+    actions.value.direction = !actions.value.direction
+  }
+
+  if(!actions.value.direction && !keyPress) {
+    if(e.target.createTextRange) {
+      let part = inp.createTextRange()
+      part.move("character", 0)
+      part.select()
+    } else if(e.target.setSelectionRange) {
+      e.target.setSelectionRange(0, 0)
+    }
+    e.target.focus()
   }
 }
 
@@ -38,11 +51,12 @@ const submitAnswer = (val) => {
       expression.status = null
       return expression
     })
-    parameters.value.regenerate = !parameters.value.regenerate
-    actions.value.currentQuestion = -1
-  } else {
-    actions.value.currentQuestion += 1
+    /* parameters.value.regenerate = !parameters.value.regenerate */
+    /* actions.value.currentQuestion = -1 */
+    /* actions.value.restart = true */
+    actions.value.complete = true
   }
+  actions.value.currentQuestion += 1
 }
 
 </script>
@@ -75,6 +89,7 @@ const submitAnswer = (val) => {
         v-model="answerInput"
         class="w-30 mx-1 mt-2 placeholder-gray-400/70 dark:placeholder-gray-500 border-0 border-b border-gray-200 bg-white px-2 py-1 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" 
         @keyup="inputAnswer($event)"
+        @keydown="keyPress($event)"
       />
   </div>
 </template>

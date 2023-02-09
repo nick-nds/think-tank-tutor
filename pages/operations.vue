@@ -15,45 +15,58 @@ const lists = ref({
   b: [],
 })
 
-watchEffect(() => {
-  parameters.value.regenerate || true
-  lists.value.a = useGenerateList(parameters.value.range.a[0], parameters.value.range.a[1], parameters.value.size)
-  lists.value.b = useGenerateList(parameters.value.range.b[0], parameters.value.range.b[1], parameters.value.size)
-})
-
 const actions = ref({
   start: false,
   generate: false,
   restart: false,
   currentQuestion: -1,
+  complete: false,
+  direction: true,
 })
-
-const currentQuestion = computed(() => actions.value.currentQuestion)
 
 const selectedOperations = ref([])
 
 const expressions = ref([])
-const attempted = computed(() => {
+
+watchEffect(() => {
+  if(!actions.value.complete) {
+    expressions.value = expressions.value.filter(ex => {
+      return ex.status != null
+    })
+    const index = expressions.value.length
+    for(let i = index; i < parameters.value.size; i++) {
+      const a = lists.value.a[i]
+      const b = lists.value.b[i]
+      const operator = selectedOperations.value.length > 0 ? useRandomizeArray(selectedOperations.value)[0] : 'add'
+      expressions.value.push({
+        a: a,
+        b: b,
+        operator: operator,
+        value: useOperate(a, b, operator),
+        status: null,
+        answer: null,
+      })
+    }
+  }
 })
 
 watchEffect(() => {
-  expressions.value = expressions.value.filter(ex => {
-    return ex.status != null
-  })
-  const index = expressions.value.length
-  for(let i = index; i < parameters.value.size; i++) {
-    console.log("i", i)
-    const a = lists.value.a[i]
-    const b = lists.value.b[i]
-    const operator = selectedOperations.value.length > 0 ? useRandomizeArray(selectedOperations.value)[0] : 'add'
-    expressions.value.push({
-      a: a,
-      b: b,
-      operator: operator,
-      value: useOperate(a, b, operator),
-      status: null,
-      answer: null,
-    })
+  parameters.value.regenerate || true
+  lists.value.b = useGenerateList(parameters.value.range.b[0], parameters.value.range.b[1], parameters.value.size)
+  if(selectedOperations.value.length == 1 && selectedOperations.value[0] == 'root') {
+    lists.value.a = useGenerateRootList(parameters.value.range.a[0], parameters.value.range.a[1], lists.value.b, parameters.value.size)
+  } else {
+    lists.value.a = useGenerateList(parameters.value.range.a[0], parameters.value.range.a[1], parameters.value.size)
+  }
+})
+
+watchEffect(() => {
+  if(actions.value.restart === true) {
+    parameters.value.regenerate = !parameters.value.regenerate
+    actions.value.currentQuestion = 0
+    actions.value.restart = false
+    actions.value.complete = false
+    expressions.value = []
   }
 })
 
@@ -66,38 +79,22 @@ provide('actions', actions)
 const cardRef = ref(null)
 const modalRef = ref(null)
 
-onMounted(() => {
-  (() => {
-    console.log("scroll2", modalRef, modalRef.value)
-    modalRef.value.onscroll = () => {
-      console.log("scroll")
-      cardRef.value.prop('scrollTop', this.scrollTop)
-    }
-  })()
-})
-
 </script>
 <template>
   <div class="flex bg:white h-full dark:bg-gray-900 pt-16">
     <div class="w-1/5">
       <OperationsSidebar />
     </div>
-    <div class="w-4/5 relative max-h-full"
-      ref="cardRef"
-    >
+    <div class="w-4/5 relative max-h-full">
       <OperationsQuestionsCards 
         v-if="actions.currentQuestion > -1"
       />
-      <div
-        ref="modalRef"
-      >
-      </div>
-      <OperationsQuestions 
-        v-if="actions.currentQuestion > -1"
-      />
-      <OperationsQuestionsStart 
-        v-else
-      />
+        <OperationsQuestions 
+          v-if="actions.currentQuestion > -1 && !actions.complete"
+        />
+        <OperationsQuestionsStart 
+          v-if="actions.currentQuestion == -1 && !actions.complete"
+        />
     </div>
   </div>
 </template>
