@@ -24,15 +24,15 @@ const answered = (st) => {
 </script>
 
 <template>
-  <div x-data="{ isOpen: true }" class="relative flex justify-center w-full h-full">
+  <div x-data="{ isOpen: true }" class="relative flex justify-center w-full">
 
     <Transition type="transition" enter-active-class="transition duration-300 ease-out"
       enter-from-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
       enter-to-class="translate-y-0 opacity-100 sm:scale-100" leave-active-class="transition duration-150 ease-in"
       leave-from-class="translate-y-0 opacity-100 sm:scale-100"
       leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95">
-        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="flex items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+          <span class="hidden sm:inline-block sm:align-middle" aria-hidden="true">&#8203;</span>
 
           <div
             :class="resultClass"

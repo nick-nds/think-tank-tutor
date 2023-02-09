@@ -12,9 +12,15 @@ export const operators = {
     svg_path: "M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" ,
   },
   exponent: {
-    symbol: '<span class="p-2 text-lg font-extrabold">a<sup>b</sup></span>',
+    symbol: '<span class="text-lg font-extrabold">a<sup>b</sup></span>',
+    render: (a, b) => {
+      return `<span class="text-lg font-extrabold">${a}<sup>${b}</sup></span>`
+    }
   },
   root: {
-    symbol: '<span class="p-2 text-lg font-extrabold"><sup>b</sup>&#8730;a</span>',
+    symbol: '<span class="text-lg font-extrabold"><sup>b</sup>&#8730;a</span>',
+    render: (a, b) => {
+      return `<span class="text-lg font-extrabold"><sup>${b}</sup>&#8730;${a}</span>`
+    }
   },
 }

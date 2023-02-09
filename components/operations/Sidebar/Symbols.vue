@@ -45,7 +45,7 @@ const selectOperator = (key) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center w-16 h-screen py-8 space-y-8 bg-white dark:bg-gray-900 dark:border-gray-700">
+  <div class="flex flex-col items-center w-16 py-8 space-y-8 bg-white dark:bg-gray-900 dark:border-gray-700">
     <a class="my-4" href="#">
       <img class="w-auto h-6 rotate-90" src="https://img.logoipsum.com/289.svg" alt="">
     </a>

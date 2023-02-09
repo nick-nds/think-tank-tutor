@@ -5,6 +5,7 @@ import { operators } from '@/components/operations/constants'
 const props = defineProps(['expression'])
 
 const expressions = inject('expressions')
+const parameters = inject('parameters')
 const actions = inject('actions')
 const currentQuestion = computed(() => actions.value.currentQuestion)
 
@@ -30,7 +31,18 @@ const submitAnswer = (val) => {
     emit('answered', false)
     expressions.value[currentQuestion.value].status = false
   }
-  actions.value.currentQuestion += 1
+  console.log("ans", ans)
+  expressions.value[currentQuestion.value].answer = ans
+  if(actions.value.currentQuestion == expressions.value.length - 1) {
+    expressions.value = expressions.value.map(expression => {
+      expression.status = null
+      return expression
+    })
+    parameters.value.regenerate = !parameters.value.regenerate
+    actions.value.currentQuestion = -1
+  } else {
+    actions.value.currentQuestion += 1
+  }
 }
 
 </script>
@@ -40,22 +52,24 @@ const submitAnswer = (val) => {
     <h3 class="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">
       Question {{ actions.currentQuestion + 1 }}:
     </h3>
-    <div class="flex justify-center mt-4 text-sm text-gray-500 dark:text-gray-400">
+    <div v-if="operators[props.expression.operator].svg_path" class="flex justify-center mt-4 text-sm text-gray-500 dark:text-gray-400">
       <span class="mx-4 text-xl font-bold">
         {{ props.expression.a }}
       </span>
       <span class="mx-4 text-xl font-bold">
-        <svg v-if="operators[props.expression.operator].svg_path" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
           class="w-6 h-6 stroke-0 fill-gray-500 dark:fill-gray-400"
         >
           <path stroke-linecap="round" stroke-linejoin="round"
             :d="operators[props.expression.operator].svg_path" />
         </svg>
-        <span v-else v-html="operators[props.expression.operator].symbol"></span>
       </span>
       <span class="mx-4 text-xl font-bold">
       {{ props.expression.b }}
       </span>
+    </div>
+    <div v-else class="flex justify-center mt-4 text-sm text-gray-500 dark:text-gray-400">
+      <span v-html="operators[props.expression.operator].render(props.expression.a, props.expression.b)"></span>
     </div>
       <input type="text" placeholder="Answer"
         v-model="answerInput"

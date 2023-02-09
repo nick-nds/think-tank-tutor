@@ -25,8 +25,8 @@ const parameters = inject('parameters')
         aria-modal="true">
         <div @click="isOpen = false" class="fixed inset-0 z-12 overflow-y-auto">
         </div>
-        <div class="flex items-end z-11 justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="flex items-end z-11 justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+          <span class="hidden sm:inline-block sm:align-middle" aria-hidden="true">&#8203;</span>
 
           <div
             class="relative mt-20 inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-top transition-all transform bg-white rounded-lg shadow-xl rtl:text-right border dark:bg-gray-900 w-3/5 sm:p-6">
