@@ -16,12 +16,12 @@ const attempted = computed(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-4 gap-4 justify-items-center h-full overflow-y-auto">
+  <div class="grid grid-cols-4 gap-4 justify-items-center h-full overflow-y-auto auto-cols-max">
     <div 
       v-for="(expression, index) in attempted.slice().reverse()"
       :key="index"
       :class="expression.status === true ? 'border-green-500' : 'border-red-500'" 
-      class="text-center border-4 py-8 rounded-md text-gray-500 dark:text-gray-400"
+      class="text-center border-4 py-8 rounded-md text-gray-500 dark:text-gray-400 h-fit"
     >
       <p>Question {{ attempted.length - index }}</p>
       <div v-if="operators[expression.operator].svg_path" class="flex justify-center h-fit mt-4 px-10 text-sm">
