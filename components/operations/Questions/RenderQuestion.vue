@@ -47,13 +47,6 @@ const submitAnswer = (val) => {
   console.log("ans", ans)
   expressions.value[currentQuestion.value].answer = ans
   if(actions.value.currentQuestion == expressions.value.length - 1) {
-    expressions.value = expressions.value.map(expression => {
-      expression.status = null
-      return expression
-    })
-    /* parameters.value.regenerate = !parameters.value.regenerate */
-    /* actions.value.currentQuestion = -1 */
-    /* actions.value.restart = true */
     actions.value.complete = true
   }
   actions.value.currentQuestion += 1
@@ -89,7 +82,6 @@ const submitAnswer = (val) => {
         v-model="answerInput"
         class="w-30 mx-1 mt-2 placeholder-gray-400/70 dark:placeholder-gray-500 border-0 border-b border-gray-200 bg-white px-2 py-1 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" 
         @keyup="inputAnswer($event)"
-        @keydown="keyPress($event)"
       />
   </div>
 </template>

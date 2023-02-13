@@ -2,11 +2,20 @@
 import { inject } from 'vue'
 
 const actions = inject('actions')
+const expressions = inject('expressions')
+
+const restart = () => {
+  expressions.value = expressions.value.map(expression => {
+    expression.status = null
+    return expression
+  })
+  actions.value.restart = true
+}
 
 </script>
 <template>
   <div class="flex flex-column justify-start">
-    <div @click="actions.restart=true" class="cursor-pointer flex group">
+    <div @click="restart()" class="cursor-pointer flex group">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
         class="w-6 h-6 stroke-0 fill-rose-900"
       >
