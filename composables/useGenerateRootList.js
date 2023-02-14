@@ -1,5 +1,4 @@
 export const useGenerateRootList = (minimum, maximum, roots, size) => {
-  console.log("generate root")
   minimum = parseInt(minimum)
   maximum = parseInt(maximum)
   size = parseInt(size)
