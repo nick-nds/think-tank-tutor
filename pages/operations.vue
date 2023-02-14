@@ -1,5 +1,8 @@
 <script setup>
-import { ref, provide, watchEffect, onMounted } from 'vue'
+import { ref, provide, watchEffect, onMounted, inject } from 'vue'
+
+const title = inject('preTitle')
+title.value = 'Operations'
 
 const parameters = ref({
   range: {
