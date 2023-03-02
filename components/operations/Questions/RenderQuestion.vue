@@ -44,7 +44,6 @@ const submitAnswer = (val) => {
     emit('answered', false)
     expressions.value[currentQuestion.value].status = false
   }
-  console.log("ans", ans)
   expressions.value[currentQuestion.value].answer = ans
   if(actions.value.currentQuestion == expressions.value.length - 1) {
     actions.value.complete = true

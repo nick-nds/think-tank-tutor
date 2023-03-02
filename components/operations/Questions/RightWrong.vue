@@ -3,10 +3,6 @@ import { watchEffect } from 'vue'
 
 const props = defineProps(['expression'])
 
-watchEffect(() => {
-  console.log("watch", props.expression)
-})
-
 </script>
 
 <template>

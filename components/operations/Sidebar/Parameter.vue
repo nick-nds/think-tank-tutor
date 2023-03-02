@@ -2,7 +2,6 @@
 import { inject } from 'vue'
 
 const parameters = inject('parameters')
-console.log("inject params", parameters.value)
 
 </script>
 <template>

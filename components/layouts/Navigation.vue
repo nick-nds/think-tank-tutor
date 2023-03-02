@@ -42,9 +42,9 @@ const route = useRoute()
             <NuxtLink to="/operations"
               :class="route.path == '/operations' ? 'text-blue-700' : 'text-gray-700'"
               class="px-3 py-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Operations</NuxtLink>
-            <NuxtLink to="/alphabets"
-              :class="route.path == '/alphabets' ? 'text-blue-700' : 'text-gray-700'"
-              class="px-3 py-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Alphabets</NuxtLink>
+            <NuxtLink to="/matrix"
+              :class="route.path == '/matrix' ? 'text-blue-700' : 'text-gray-700'"
+              class="px-3 py-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Matrix</NuxtLink>
           </div>
 
           <div class="flex items-center mt-4 lg:mt-0">

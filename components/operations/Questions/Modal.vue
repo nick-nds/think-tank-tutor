@@ -1,19 +1,8 @@
 <script setup>
-import { ref, inject, Transition, watchEffect } from 'vue'
+import { ref, Transition } from 'vue'
 
 const props = defineProps(['expression'])
-const isOpen = ref(true)
 
-const actions = inject('actions')
-
-watchEffect(() => {
-  console.log("watch 2", props.expression)
-})
-
-const ltrClick = () => {
-  console.log("click", actions.value.direction)
-  actions.value.direction = !actions.value.direction
-}
 
 const resultClass = ref('border-4 border-gray-400 shadow-[0_0_20px,inset_0_0_20px] shadow-gray-400')
 
