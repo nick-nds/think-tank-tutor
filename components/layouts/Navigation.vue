@@ -6,7 +6,7 @@ const route = useRoute()
 
 </script>
 <template>
-  <nav x-data="{ isOpen: false }" class="fixed top-0 left-0 w-full h-16 bg-white shadow dark:bg-gray-800">
+  <nav x-data="{ isOpen: false }" class="fixed top-0 left-0 w-full h-16 z-50 bg-white shadow dark:bg-gray-800">
     <div class="container px-6 py-4 mx-auto">
       <div class="lg:flex lg:items-center lg:justify-between">
         <div class="flex items-center justify-between">

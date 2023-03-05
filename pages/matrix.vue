@@ -8,7 +8,7 @@ title.value = 'Matrix'
 
 const getDefaultValue = () => {
   const row = alphabets[1]
-  return [row[0], 1, row[1]]
+  return [row[0], 1, row[2]]
 }
 
 const getCols = () => {
@@ -25,12 +25,6 @@ const parameters = ref({
   end: false,
 })
 
-const positionsCount = computed(() => {
-  return parameters.value.cols.reduce((total, c) => {
-    return c + total
-  }, 0)
-})
-
 const getActiveCols = () => {
   let cols = []
   parameters.value.cols.forEach((c, i) => {
@@ -42,7 +36,7 @@ const getActiveCols = () => {
 }
 
 const matrix = computed(() =>{
-  parameters.value.currentQuestion || true
+  parameters.value || true
   return useGenerateAlphabets(parameters.value.size)
 })
 
