@@ -36,7 +36,7 @@ const inputAnswer = (e) => {
 const emit = defineEmits(['answered'])
 
 const submitAnswer = (val) => {
-  const ans = useRound(Number(val))
+  const ans = expressions.value[currentQuestion.value].operator == "divide" ? useRoundDivide(Number(val)) : useRound(Number(val))
   if(ans == props.expression.value) {
     expressions.value[currentQuestion.value].status = true
     emit('answered', true)

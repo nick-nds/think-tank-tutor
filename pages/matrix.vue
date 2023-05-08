@@ -36,7 +36,7 @@ const getActiveCols = () => {
 }
 
 const matrix = computed(() =>{
-  parameters.value || true
+  parameters.value || parameters.value.currentQuestion || parameters.value.end || true
   return useGenerateAlphabets(parameters.value.size)
 })
 

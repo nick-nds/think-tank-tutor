@@ -1,6 +1,10 @@
 export const useOperate = (a, b, operator) => {
   const ans = operations[operator](a, b)
-  return useRound(ans)
+  if(operator == "divide") {
+    return useRoundDivide(ans)
+  } else {
+    return useRound(ans)
+  }
 }
 
 const operations = {
