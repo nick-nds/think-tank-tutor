@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     // Use the existing tailwind.config.js file
   },
   app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/prac-calc/' : '/',
+    baseURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/',
     head: {
       htmlAttrs: {
         class: 'dark'
