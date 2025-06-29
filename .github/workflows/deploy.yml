@@ -36,10 +36,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        with:
-          # Automatically inject basePath in your Nuxt configuration file and disable server-side rendering
-          # You may remove this line if you want to manage the configuration yourself
-          static_site_generator: nuxt
 
       - name: Restore cache
         uses: actions/cache@v4
@@ -55,7 +51,7 @@ jobs:
         run: npm ci
 
       - name: Static HTML export with Nuxt
-        run: npm run generate
+        run: NUXT_APP_BASE_URL=/think-tank-tutor/ npm run generate
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

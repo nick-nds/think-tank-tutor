@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/sitemap.xml']
     },
-    baseURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/'
+    baseURL: process.env.NUXT_APP_BASE_URL || '/'
   },
   modules: [
     '@nuxtjs/tailwindcss',
@@ -16,8 +16,8 @@ export default defineNuxtConfig({
     // Use the existing tailwind.config.js file
   },
   app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/',
-    cdnURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/',
+    baseURL: process.env.NUXT_APP_BASE_URL || '/',
+    cdnURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       htmlAttrs: {
         class: 'dark'
