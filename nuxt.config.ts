@@ -6,6 +6,9 @@ export default defineNuxtConfig({
       routes: ['/sitemap.xml']
     }
   },
+  router: {
+    base: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/'
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-icons',
@@ -16,6 +19,7 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/',
+    cdnURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/',
     head: {
       htmlAttrs: {
         class: 'dark'

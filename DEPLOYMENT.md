@@ -30,7 +30,7 @@ Make sure your repository has these settings:
 
 No environment variables are needed for this deployment. The app will automatically:
 
-- Use the correct base URL (`/prac-calc/` in production)
+- Use the correct base URL (`/think-tank-tutor/` in production)
 - Configure static site generation
 - Handle client-side routing properly
 
@@ -68,7 +68,7 @@ You can also trigger deployment manually:
 After successful deployment, your app will be available at:
 
 ```
-https://<your-username>.github.io/prac-calc/
+https://<your-username>.github.io/think-tank-tutor/
 ```
 
 Replace `<your-username>` with your actual GitHub username.
