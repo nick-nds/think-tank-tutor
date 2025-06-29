@@ -45,18 +45,18 @@ const selectOperator = (key) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center w-16 py-8 space-y-8 bg-white dark:bg-gray-900 dark:border-gray-700">
+  <div class="flex flex-col items-center w-16 py-8 space-y-8 bg-dark-800 border-r border-dark-600">
     <a class="my-4" href="#">
       <img class="w-auto h-6 rotate-90" src="https://img.logoipsum.com/289.svg" alt="">
     </a>
 
     <span v-for="(operation, key) in operations" :key="key"
-      :class="operation.selected ? 'bg-blue-100 text-blue-500 dark-text-blue-400 dark:bg-gray-800' : 'text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100'"
-      class="p-1.5 transition-colors duration-200 rounded-lg cursor-pointer"
+      :class="operation.selected ? 'bg-accent-primary/20 text-accent-primary border border-accent-primary/30' : 'text-dark-400 hover:text-dark-200 hover:bg-dark-700'"
+      class="p-1.5 transition-all duration-200 rounded-lg cursor-pointer border border-transparent"
       @click="selectOperator(key)"
     >
       <svg v-if="operation.svg_path" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
-        :class="operation.selected ? 'fill-blue-500' : 'fill-gray-500'"
+        :class="operation.selected ? 'fill-accent-primary' : 'fill-current'"
         class="w-6 h-6 stroke-0"
       >
         <path stroke-linecap="round" stroke-linejoin="round"

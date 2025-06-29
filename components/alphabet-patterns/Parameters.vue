@@ -12,12 +12,12 @@ const setActiveCols = (index) => {
 </script>
 
 <template>
-  <div class="h-20 z-20 w-full border flex justify-around items-center">
+  <div class="h-20 z-20 w-full bg-dark-800 border-b border-dark-600 flex justify-around items-center">
     <div class="flex">
       <div 
         v-for="(cols, index) in parameters.cols"
-        :class="cols ? 'border-green-500 shadow-lg shadow-green-500/50' : ''"
-        class="w-16 mx-2 border border-2 text-center p-2 text-gray-200 hover:border-green-500 cursor-pointer"
+        :class="cols ? 'border-accent-success bg-accent-success/10 shadow-lg shadow-accent-success/20' : 'border-dark-600 hover:border-accent-success/50'"
+        class="w-16 mx-2 border-2 text-center p-2 text-dark-100 transition-all duration-200 cursor-pointer rounded-lg bg-dark-700 hover:bg-dark-600"
         @click="setActiveCols(index)"
       >
         {{ parameters.defaultValue[index] }}
@@ -26,8 +26,8 @@ const setActiveCols = (index) => {
     <input type="text" placeholder="Size"
       :value="parameters.size"
       @keyup="parameters.size = $event.target.value"
-          class="w-16 mx-1 text-center placeholder-gray-400/70 dark:placeholder-gray-500 border-0 border-b border-gray-200 bg-white px-2 py-1 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          class="input-field w-16 mx-1 text-center"
     />
-    <MatrixMediaButtons />
+    <AlphabetPatternsMediaButtons />
   </div>
 </template>

@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  
+  body {
+    @apply bg-dark-900 text-dark-50 font-sans;
+  }
+  
+  /* Scrollbar styling for dark theme */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.dark.600') theme('colors.dark.800');
+  }
+  
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    @apply bg-dark-800;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    @apply bg-dark-600 rounded-full;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-500;
+  }
+}
+
+@layer components {
+  /* Enhanced Card Components */
+  .card {
+    @apply bg-dark-700 border border-dark-600 rounded-xl p-6 shadow-lg backdrop-blur-sm;
+  }
+  
+  .card-hover {
+    @apply card transition-all duration-300 hover:shadow-2xl hover:shadow-accent-primary/10 hover:border-accent-primary/30 hover:-translate-y-1;
+  }
+  
+  .card-interactive {
+    @apply card-hover cursor-pointer;
+  }
+  
+  /* Enhanced Button Components */
+  .btn-primary {
+    @apply bg-gradient-to-r from-accent-primary to-blue-600 hover:from-blue-600 hover:to-accent-primary text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-primary/25 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-dark-600 hover:bg-dark-500 text-dark-100 px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-dark-500 hover:border-dark-400 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-success {
+    @apply bg-gradient-to-r from-accent-success to-green-600 hover:from-green-600 hover:to-accent-success text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-success/25 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-error {
+    @apply bg-gradient-to-r from-accent-error to-red-600 hover:from-red-600 hover:to-accent-error text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-error/25 transform hover:scale-105 active:scale-95;
+  }
+  
+  .btn-ghost {
+    @apply text-dark-200 hover:text-dark-50 px-6 py-3 rounded-xl transition-all duration-300 font-medium hover:bg-dark-700/50 border border-transparent hover:border-dark-600;
+  }
+  
+  /* Enhanced Input Components */
+  .input-field {
+    @apply bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-4 py-3 rounded-xl focus:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 backdrop-blur-sm;
+  }
+  
+  .input-field-large {
+    @apply input-field text-lg py-4;
+  }
+  
+  /* Surface Components */
+  .surface {
+    @apply bg-dark-800/30 border border-dark-600 rounded-xl backdrop-blur-sm;
+  }
+  
+  .surface-elevated {
+    @apply bg-dark-700/50 border border-dark-600 rounded-xl shadow-xl backdrop-blur-sm;
+  }
+  
+  .surface-glass {
+    @apply bg-dark-800/20 border border-dark-600/50 rounded-xl backdrop-blur-md;
+  }
+  
+  /* Progress Components */
+  .progress-bar {
+    @apply w-full bg-dark-700 rounded-full h-2 overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-accent-primary to-blue-600 transition-all duration-500 ease-out;
+  }
+  
+  /* Badge Components */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .badge-primary {
+    @apply badge bg-accent-primary/20 text-accent-primary border border-accent-primary/30;
+  }
+  
+  .badge-success {
+    @apply badge bg-accent-success/20 text-accent-success border border-accent-success/30;
+  }
+  
+  .badge-error {
+    @apply badge bg-accent-error/20 text-accent-error border border-accent-error/30;
+  }
+  
+  /* Icon Buttons */
+  .icon-btn {
+    @apply p-3 rounded-xl transition-all duration-300 hover:bg-dark-700 text-dark-400 hover:text-dark-100 border border-transparent hover:border-dark-600;
+  }
+  
+  .icon-btn-primary {
+    @apply icon-btn hover:bg-accent-primary/10 hover:text-accent-primary hover:border-accent-primary/30;
+  }
+  
+  /* Floating Action Button */
+  .fab {
+    @apply fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-accent-primary to-blue-600 text-white rounded-full shadow-lg hover:shadow-accent-primary/25 transition-all duration-300 flex items-center justify-center transform hover:scale-110 active:scale-95 z-50;
+  }
+  
+  /* Loading Spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-dark-600 border-t-accent-primary;
+  }
+  
+  /* Glow Effect */
+  .glow {
+    @apply shadow-lg shadow-accent-primary/20;
+  }
+  
+  .glow-success {
+    @apply shadow-lg shadow-accent-success/20;
+  }
+  
+  .glow-error {
+    @apply shadow-lg shadow-accent-error/20;
+  }
+}
+
+@layer utilities {
+  /* Custom animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.8s ease-out;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

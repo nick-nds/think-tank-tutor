@@ -1,20 +1,51 @@
-export const useGenerateAlphabets = (size)  => {
-  let alphabetCopy = [ ...alphabets ]
-  let count = 0
-  let alpha = []
-  while (count < size) {
-    const index = useRandomIntFromInterval(1, alphabetCopy.length - 1)
-    alpha.push([alphabetCopy[index][0], alphabetCopy[index][1], alphabetCopy[index][2]])
-    alphabetCopy.splice(index, 1)
-    if(alphabetCopy.length == 1 && alphabetCopy[0][0] == '') {
-      alphabetCopy = [ ...alphabets ]
-    }
-    count ++
+import { useRandomIntFromInterval } from './useRandomIntFromInterval.js'
+
+/**
+ * Generates random alphabet triplets for matrix exercises
+ * @param {number|string} size - Number of triplets to generate
+ * @returns {Array<Array<string>>} Array of alphabet triplets [letter, number, reverse_letter]
+ */
+export const useGenerateAlphabets = (size) => {
+  const parsedSize = parseInt(size)
+  
+  if (isNaN(parsedSize) || parsedSize <= 0) {
+    throw new Error('Size must be a positive number')
   }
-  return alpha
+  
+  let availableAlphabets = [...ALPHABET_MAPPINGS]
+  const result = []
+  
+  for (let i = 0; i < parsedSize; i++) {
+    // Skip the empty placeholder at index 0
+    const validAlphabets = availableAlphabets.filter(item => item[0] !== '')
+    
+    if (validAlphabets.length === 0) {
+      availableAlphabets = [...ALPHABET_MAPPINGS]
+      continue
+    }
+    
+    const randomIndex = useRandomIntFromInterval(0, validAlphabets.length - 1)
+    const selectedTriplet = validAlphabets[randomIndex]
+    
+    result.push([...selectedTriplet])
+    
+    // Remove selected item from available pool
+    const originalIndex = availableAlphabets.findIndex(item => 
+      item[0] === selectedTriplet[0] && 
+      item[1] === selectedTriplet[1] && 
+      item[2] === selectedTriplet[2]
+    )
+    availableAlphabets.splice(originalIndex, 1)
+  }
+  
+  return result
 }
 
-export const alphabets = [
+/**
+ * Alphabet mapping constants for matrix exercises
+ * Each triplet represents: [letter, position_number, reverse_letter]
+ */
+export const ALPHABET_MAPPINGS = [
   ['', '', ''],
   ['A', '1', 'Z'],
   ['B', '2', 'Y'],
@@ -43,3 +74,6 @@ export const alphabets = [
   ['Y', '25', 'B'],
   ['Z', '26', 'A'],
 ]
+
+// Deprecated: Use ALPHABET_MAPPINGS instead
+export const alphabets = ALPHABET_MAPPINGS

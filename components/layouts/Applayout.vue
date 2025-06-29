@@ -1,3 +1,6 @@
 <template>
-  <LayoutsNavigation />
+  <div>
+    <LayoutsNavigation />
+    <slot />
+  </div>
 </template>

@@ -22,7 +22,8 @@ provide('preTitle', preTitle)
 </script>
 <template>
   <div class="dark h-screen">
-    <LayoutsApplayout />
-    <NuxtPage />
+    <LayoutsApplayout>
+      <NuxtPage />
+    </LayoutsApplayout>
   </div>
 </template>
