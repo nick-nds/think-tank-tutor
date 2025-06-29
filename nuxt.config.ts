@@ -4,10 +4,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/sitemap.xml']
-    }
-  },
-  router: {
-    base: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/'
+    },
+    baseURL: process.env.NODE_ENV === 'production' ? '/think-tank-tutor/' : '/'
   },
   modules: [
     '@nuxtjs/tailwindcss',
