@@ -1,42 +1,36 @@
-# Nuxt 3 Minimal Starter
+# Think Tank Tutor
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A rapid-fire practice app designed to help competitive exam aspirants improve their speed and accuracy in mathematical operations and alphabet pattern recognition.
 
-## Setup
+## Purpose
 
-Make sure to install the dependencies:
+I created this website to help my friend who is preparing for competitive government exams. He needed focused practice on specific question types to sharpen his calculation skills and alphabet pattern memorization for faster problem-solving during timed exams.
+
+## Features
+
+- **🧮 Mathematical Operations**: Practice addition, subtraction, multiplication, division, exponents, and roots
+- **🔤 Alphabet Patterns**: Master letter-number associations and reverse alphabet mappings (A=1=Z, B=2=Y, etc.)
+- **⚡ Rapid-Fire Mode**: Keyboard-only interaction with auto-focus for maximum speed
+- **📊 Progress Tracking**: Real-time performance monitoring and detailed results
+- **💾 Settings Persistence**: Your preferences are automatically saved
+- **🎯 Customizable Practice**: Choose question count, operation types, and difficulty ranges
+
+## Quick Start
 
 ```bash
-# yarn
-yarn install
-
-# npm
+# Install dependencies
 npm install
 
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
+# Start development server
 npm run dev
+
+# Visit http://localhost:3000
 ```
 
-## Production
+## Deployment
 
-Build the application for production:
+The app is configured for GitHub Pages deployment. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
-```bash
-npm run build
-```
+---
 
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+*Built with Nuxt.js for fast, responsive performance during intensive practice sessions.*
