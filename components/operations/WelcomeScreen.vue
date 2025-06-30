@@ -48,6 +48,18 @@ const operationStats = [
         <p class="text-base text-dark-200 mb-4 max-w-2xl mx-auto">
           Configure your settings and start rapid-fire practice to boost your calculation speed.
         </p>
+        
+        <!-- Mobile Settings Hint -->
+        <div class="lg:hidden bg-accent-primary/10 border border-accent-primary/30 rounded-lg p-3 mb-4 max-w-md mx-auto animate-pulse-gentle">
+          <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5 text-accent-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-sm text-dark-100">
+              Tap <span class="font-semibold">Settings</span> button at the top to configure operations and ranges
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- Operation Types Grid -->

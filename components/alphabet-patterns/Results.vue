@@ -111,92 +111,92 @@ const getColumnName = (index) => {
   <div class="h-full overflow-y-auto">
     <!-- Hero Section -->
     <div class="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-sm border-b border-dark-600/30">
-      <div class="max-w-4xl mx-auto px-6 py-16 text-center">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-16 text-center">
         <div :class="isLoaded ? 'animate-bounce-in' : 'opacity-0'">
-          <div class="mb-4">
-            <svg :class="[performance.color, 'w-16 h-16 mx-auto']" fill="currentColor" viewBox="0 0 20 20">
+          <div class="mb-3 sm:mb-4">
+            <svg :class="[performance.color, 'w-12 h-12 sm:w-16 sm:h-16 mx-auto']" fill="currentColor" viewBox="0 0 20 20">
               <path :d="performance.icon"></path>
             </svg>
           </div>
-          <h1 class="text-4xl font-bold text-dark-50 mb-4">Pattern Session Complete!</h1>
-          <p class="text-xl text-dark-200 mb-8">Excellent work on mastering alphabet patterns</p>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-dark-50 mb-3 sm:mb-4">Pattern Session Complete!</h1>
+          <p class="text-base sm:text-xl text-dark-200 mb-6 sm:mb-8">Excellent work on mastering alphabet patterns</p>
         </div>
       </div>
     </div>
 
     <!-- Main Stats -->
-    <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       <!-- Overall Performance -->
-      <div :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.2s;" class="text-center mb-16">
-        <div :class="[performance.bg, 'rounded-2xl p-8 mb-8 max-w-md mx-auto']">
-          <div :class="[performance.color, 'text-3xl font-bold mb-2']">{{ stats.accuracy }}%</div>
-          <div :class="[performance.color, 'text-lg font-medium mb-1']">{{ performance.level }}</div>
+      <div :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.2s;" class="text-center mb-8 sm:mb-16">
+        <div :class="[performance.bg, 'rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 max-w-md mx-auto']">
+          <div :class="[performance.color, 'text-2xl sm:text-3xl font-bold mb-1 sm:mb-2']">{{ stats.accuracy }}%</div>
+          <div :class="[performance.color, 'text-base sm:text-lg font-medium mb-1']">{{ performance.level }}</div>
           <div class="text-dark-300 text-sm">Overall Accuracy</div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-          <div class="surface-elevated p-6 text-center">
-            <div class="text-2xl font-bold text-accent-success mb-1">{{ stats.correct }}</div>
-            <div class="text-dark-300 text-sm">Correct</div>
+        <div class="grid grid-cols-3 gap-3 sm:gap-6 max-w-2xl mx-auto">
+          <div class="surface-elevated p-3 sm:p-6 text-center">
+            <div class="text-lg sm:text-2xl font-bold text-accent-success mb-1">{{ stats.correct }}</div>
+            <div class="text-dark-300 text-xs sm:text-sm">Correct</div>
           </div>
-          <div class="surface-elevated p-6 text-center">
-            <div class="text-2xl font-bold text-accent-error mb-1">{{ stats.incorrect }}</div>
-            <div class="text-dark-300 text-sm">Incorrect</div>
+          <div class="surface-elevated p-3 sm:p-6 text-center">
+            <div class="text-lg sm:text-2xl font-bold text-accent-error mb-1">{{ stats.incorrect }}</div>
+            <div class="text-dark-300 text-xs sm:text-sm">Incorrect</div>
           </div>
-          <div class="surface-elevated p-6 text-center">
-            <div class="text-2xl font-bold text-accent-primary mb-1">{{ stats.total }}</div>
-            <div class="text-dark-300 text-sm">Total</div>
+          <div class="surface-elevated p-3 sm:p-6 text-center">
+            <div class="text-lg sm:text-2xl font-bold text-accent-primary mb-1">{{ stats.total }}</div>
+            <div class="text-dark-300 text-xs sm:text-sm">Total</div>
           </div>
         </div>
       </div>
 
       <!-- Column Performance -->
-      <div v-if="columnStats.length > 0" :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.4s;" class="mb-16">
-        <h2 class="text-2xl font-bold text-dark-50 text-center mb-8">Performance by Column Type</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div v-if="columnStats.length > 0" :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.4s;" class="mb-8 sm:mb-16">
+        <h2 class="text-lg sm:text-2xl font-bold text-dark-50 text-center mb-4 sm:mb-8">Performance by Column Type</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto">
           <div 
             v-for="columnStat in columnStats" 
             :key="columnStat.name"
-            class="surface-elevated p-6 text-center"
+            class="surface-elevated p-4 sm:p-6 text-center"
           >
             <div class="mb-2">
-              <svg v-if="columnStat.name === 'Letters'" class="w-8 h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
+              <svg v-if="columnStat.name === 'Letters'" class="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0zM7 7a2 2 0 012-2h2a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V7z"></path>
               </svg>
-              <svg v-else-if="columnStat.name === 'Numbers'" class="w-8 h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
+              <svg v-else-if="columnStat.name === 'Numbers'" class="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zM14 8a1 1 0 10-2 0v4a1 1 0 102 0V8z"></path>
               </svg>
-              <svg v-else class="w-8 h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
+              <svg v-else class="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-accent-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"></path>
               </svg>
             </div>
-            <div class="text-lg font-semibold text-dark-100 mb-3">{{ columnStat.name }}</div>
-            <div class="text-2xl font-bold mb-1" :class="{
+            <div class="text-sm sm:text-lg font-semibold text-dark-100 mb-2 sm:mb-3">{{ columnStat.name }}</div>
+            <div class="text-lg sm:text-2xl font-bold mb-1" :class="{
               'text-accent-success': columnStat.accuracy >= 80,
               'text-accent-warning': columnStat.accuracy >= 60 && columnStat.accuracy < 80,
               'text-accent-error': columnStat.accuracy < 60
             }">
               {{ columnStat.accuracy }}%
             </div>
-            <div class="text-dark-300 text-sm">{{ columnStat.correct }}/{{ columnStat.total }} correct</div>
+            <div class="text-dark-300 text-xs sm:text-sm">{{ columnStat.correct }}/{{ columnStat.total }} correct</div>
           </div>
         </div>
       </div>
 
       <!-- Question Review -->
-      <div :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.6s;" class="mb-16">
-        <h2 class="text-2xl font-bold text-dark-50 text-center mb-8">Pattern Review</h2>
-        <div class="max-w-4xl mx-auto space-y-4">
+      <div :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.6s;" class="mb-8 sm:mb-16">
+        <h2 class="text-lg sm:text-2xl font-bold text-dark-50 text-center mb-4 sm:mb-8">Pattern Review</h2>
+        <div class="max-w-4xl mx-auto space-y-2 sm:space-y-4">
           <div 
             v-for="(attempt, index) in attempted" 
             :key="index"
             :class="[
-              'surface-elevated p-4 flex items-center justify-between',
+              'surface-elevated p-3 sm:p-4 flex items-center justify-between',
               attempt.correct ? 'border-l-4 border-accent-success' : 'border-l-4 border-accent-error'
             ]"
           >
-            <div class="flex items-center space-x-4">
-              <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold" :class="{
+            <div class="flex items-center space-x-2 sm:space-x-4">
+              <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs sm:text-sm font-bold" :class="{
                 'bg-accent-success/20 text-accent-success': attempt.correct,
                 'bg-accent-error/20 text-accent-error': !attempt.correct
               }">
@@ -218,13 +218,13 @@ const getColumnName = (index) => {
               </div>
             </div>
             <div class="text-right">
-              <div class="font-bold" :class="{
+              <div class="font-bold text-sm sm:text-base" :class="{
                 'text-accent-success': attempt.correct,
                 'text-accent-error': !attempt.correct
               }">
                 {{ attempt.userAnswer || 'Skipped' }}
               </div>
-              <div class="text-sm text-dark-400">
+              <div class="text-xs sm:text-sm text-dark-400">
                 Correct: {{ attempt.correctAnswer }}
               </div>
             </div>
@@ -233,28 +233,44 @@ const getColumnName = (index) => {
       </div>
 
       <!-- Actions -->
-      <div :class="isLoaded ? 'animate-fade-in' : 'opacity-0'" style="animation-delay: 0.8s;" class="text-center">
-        <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-          <button @click="restart" class="btn-primary flex-1">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            Try Again
-          </button>
-          <button @click="startNew" class="btn-secondary flex-1">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            New Session
-          </button>
+      <div :class="isLoaded ? 'animate-fade-in' : 'opacity-0'" style="animation-delay: 0.8s;" class="text-center pb-6">
+        <div class="space-y-4 max-w-md mx-auto">
+          <!-- Primary Actions -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button 
+              @click="restart" 
+              class="bg-gradient-to-r from-accent-primary to-blue-600 hover:from-blue-600 hover:to-accent-primary text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-primary/25 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+              </svg>
+              <span>Try Again</span>
+            </button>
+            
+            <button 
+              @click="startNew" 
+              class="bg-dark-600 hover:bg-dark-500 text-dark-100 px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-dark-500 hover:border-dark-400 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+              </svg>
+              <span>New Session</span>
+            </button>
+          </div>
+          
+          <!-- Secondary Action -->
+          <div class="pt-2">
+            <NuxtLink 
+              to="/" 
+              class="text-dark-200 hover:text-dark-50 px-6 py-3 rounded-xl transition-all duration-300 font-medium hover:bg-dark-700/50 border border-transparent hover:border-dark-600 inline-flex items-center gap-2 touch-manipulation"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"></path>
+              </svg>
+              <span>Back to Home</span>
+            </NuxtLink>
+          </div>
         </div>
-        
-        <NuxtLink to="/" class="btn-ghost mt-4 inline-flex items-center">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-          </svg>
-          Back to Home
-        </NuxtLink>
       </div>
     </div>
   </div>

@@ -228,7 +228,7 @@ watch(() => parameters.value.currentQuestion, () => {
     <!-- Header Stats -->
     <div class="bg-dark-800/30 backdrop-blur-sm border-b border-dark-600/30 p-2">
       <div class="max-w-4xl mx-auto">
-        <div class="grid grid-cols-2 gap-3 text-sm">
+        <div class="grid grid-cols-2 gap-3 text-sm mb-3">
           <!-- Question Counter & Progress -->
           <div class="text-center">
             <div class="text-sm font-bold text-accent-success mb-1">
@@ -247,6 +247,42 @@ watch(() => parameters.value.currentQuestion, () => {
             <div class="text-sm font-bold text-accent-warning">
               {{ score }}%
             </div>
+          </div>
+        </div>
+        
+        <!-- Question Navigation -->
+        <div class="flex justify-center space-x-1 overflow-x-auto">
+          <div 
+            v-for="(attempt, index) in attempted" 
+            :key="index"
+            :class="[
+              'w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0',
+              index === parameters.currentQuestion 
+                ? 'bg-accent-success text-white ring-2 ring-accent-success/50' 
+                : attempt.correct
+                ? 'bg-accent-success/20 text-accent-success'
+                : 'bg-accent-error/20 text-accent-error'
+            ]"
+          >
+            {{ index + 1 }}
+          </div>
+          <!-- Show current question indicator -->
+          <div 
+            v-if="parameters.currentQuestion >= 0 && parameters.currentQuestion < parameters.size"
+            :class="[
+              'w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0',
+              'bg-accent-success text-white ring-2 ring-accent-success/50'
+            ]"
+          >
+            {{ parameters.currentQuestion + 1 }}
+          </div>
+          <!-- Show upcoming questions -->
+          <div 
+            v-for="n in Math.max(0, parameters.size - attempted.length - 1)" 
+            :key="`upcoming-${n}`"
+            class="w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0 bg-dark-600 text-dark-300"
+          >
+            {{ attempted.length + n + 2 }}
           </div>
         </div>
       </div>
@@ -354,30 +390,6 @@ watch(() => parameters.value.currentQuestion, () => {
         <div v-else class="text-center py-12">
           <div class="spinner w-8 h-8 mx-auto mb-4"></div>
           <div class="text-dark-300">Loading next pattern...</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Question Navigation -->
-    <div class="bg-dark-800/20 border-t border-dark-600/30 p-1">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex justify-center space-x-1 overflow-x-auto">
-          <div 
-            v-for="(pattern, index) in expressions" 
-            :key="index"
-            :class="[
-              'w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0',
-              index === parameters.currentQuestion 
-                ? 'bg-accent-success text-white ring-2 ring-accent-success/50' 
-                : attempted.find(a => a.question === index)?.correct
-                ? 'bg-accent-success/20 text-accent-success'
-                : attempted.find(a => a.question === index)
-                ? 'bg-accent-error/20 text-accent-error'
-                : 'bg-dark-700 text-dark-400'
-            ]"
-          >
-            {{ index + 1 }}
-          </div>
         </div>
       </div>
     </div>

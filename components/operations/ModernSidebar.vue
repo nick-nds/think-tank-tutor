@@ -118,11 +118,11 @@ selectedOperations.value.forEach(op => {
 <template>
   <div class="h-full flex flex-col bg-dark-800/50 backdrop-blur-sm">
     <!-- Header -->
-    <div class="p-4 border-b border-dark-600/30">
+    <div class="p-3 sm:p-4 border-b border-dark-600/30">
       <div class="flex items-center justify-between mb-1">
-        <h2 class="text-lg font-bold text-dark-50">Settings</h2>
-        <button @click="$emit('close')" class="lg:hidden icon-btn text-dark-400 hover:text-dark-200">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 class="text-base sm:text-lg font-bold text-dark-50">Settings</h2>
+        <button @click="$emit('close')" class="lg:hidden p-1 rounded hover:bg-dark-700 text-dark-400 hover:text-dark-200 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
@@ -132,34 +132,34 @@ selectedOperations.value.forEach(op => {
     <!-- Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
       <!-- Operations Selection -->
-      <div class="p-4 border-b border-dark-600/30">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-base font-semibold text-dark-100">Operations</h3>
-          <div class="badge-primary text-xs">{{ selectedCount }}</div>
+      <div class="p-3 sm:p-4 border-b border-dark-600/30">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="text-sm sm:text-base font-semibold text-dark-100">Operations</h3>
+          <div class="bg-accent-primary/20 text-accent-primary px-2 py-1 rounded text-xs">{{ selectedCount }}</div>
         </div>
         
-        <div class="grid grid-cols-3 gap-1">
+        <div class="grid grid-cols-3 gap-1 sm:gap-2">
           <div 
             v-for="(operation, key) in operations" 
             :key="key"
             @click="toggleOperation(key)"
             :class="[
-              'cursor-pointer rounded p-1 border transition-all duration-300 group text-center',
+              'cursor-pointer rounded p-2 sm:p-3 border transition-all duration-300 group text-center touch-manipulation',
               operation.selected 
                 ? `${operation.bgColor} ${operation.borderColor}` 
                 : 'bg-dark-700/30 border-dark-600 hover:border-dark-500'
             ]"
           >
-            <div :class="[operation.selected ? operation.color : 'text-dark-400', 'flex items-center justify-center h-6']">
-              <svg v-if="operation.icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <div :class="[operation.selected ? operation.color : 'text-dark-400', 'flex items-center justify-center h-6 sm:h-8 mb-1']">
+              <svg v-if="operation.icon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" :d="operation.icon"></path>
               </svg>
-              <span v-else class="text-lg font-bold">{{ operation.symbol }}</span>
+              <span v-else class="text-base sm:text-lg font-bold">{{ operation.symbol }}</span>
             </div>
-            <div :class="[operation.selected ? 'text-dark-50' : 'text-dark-200', 'font-medium text-xs']">
+            <div :class="[operation.selected ? 'text-dark-50' : 'text-dark-200', 'font-medium text-xs leading-tight']">
               {{ operation.name.split(' ')[0] }}
             </div>
-            <div v-if="operation.selected" :class="[operation.color]">
+            <div v-if="operation.selected" :class="[operation.color, 'mt-1']">
               <svg class="w-2 h-2 mx-auto" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
@@ -169,25 +169,25 @@ selectedOperations.value.forEach(op => {
       </div>
 
       <!-- Range Settings -->
-      <div class="p-3 border-b border-dark-600/30">
+      <div class="p-3 sm:p-4 border-b border-dark-600/30">
         <h3 class="text-sm font-semibold text-dark-100 mb-2">Ranges</h3>
         
         <!-- Range A -->
         <div class="mb-3">
           <label class="block text-dark-200 text-xs mb-1">A:</label>
-          <div class="flex space-x-1">
+          <div class="flex space-x-2">
             <input
               :value="parameters.range.a[0]"
               @input="updateRange('a', 0, $event.target.value)"
               type="number"
-              class="input-field w-full text-center text-xs"
+              class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
             >
-            <span class="text-dark-400 text-xs self-center">-</span>
+            <span class="text-dark-400 text-sm self-center">-</span>
             <input
               :value="parameters.range.a[1]"
               @input="updateRange('a', 1, $event.target.value)"
               type="number"
-              class="input-field w-full text-center text-xs"
+              class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
             >
           </div>
         </div>
@@ -195,26 +195,26 @@ selectedOperations.value.forEach(op => {
         <!-- Range B -->
         <div>
           <label class="block text-dark-200 text-xs mb-1">B:</label>
-          <div class="flex space-x-1">
+          <div class="flex space-x-2">
             <input
               :value="parameters.range.b[0]"
               @input="updateRange('b', 0, $event.target.value)"
               type="number"
-              class="input-field w-full text-center text-xs"
+              class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
             >
-            <span class="text-dark-400 text-xs self-center">-</span>
+            <span class="text-dark-400 text-sm self-center">-</span>
             <input
               :value="parameters.range.b[1]"
               @input="updateRange('b', 1, $event.target.value)"
               type="number"
-              class="input-field w-full text-center text-xs"
+              class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
             >
           </div>
         </div>
       </div>
 
       <!-- Session Settings -->
-      <div class="p-3 border-b border-dark-600/30">
+      <div class="p-3 sm:p-4 border-b border-dark-600/30">
         <h3 class="text-sm font-semibold text-dark-100 mb-2">Questions</h3>
         
         <div>
@@ -223,21 +223,21 @@ selectedOperations.value.forEach(op => {
             @input="updateSize($event.target.value)"
             type="number"
             min="1"
-            max="100"
-            class="input-field w-full text-center text-xs"
+            class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
+            placeholder="Number of questions"
           >
         </div>
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="p-2 border-t border-dark-600/30 bg-dark-800/30">
+    <div class="p-3 sm:p-4 border-t border-dark-600/30 bg-dark-800/30">
       <button 
         v-if="actions.currentQuestion > -1"
         @click="restart"
-        class="btn-error w-full text-xs py-1"
+        class="bg-gradient-to-r from-accent-error to-red-600 hover:from-red-600 hover:to-accent-error text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium w-full text-sm"
       >
-        Reset
+        Reset Practice
       </button>
     </div>
   </div>

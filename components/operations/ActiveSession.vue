@@ -128,7 +128,7 @@ watch(() => actions.value.currentQuestion, () => {
     <!-- Header Stats -->
     <div class="bg-dark-800/30 backdrop-blur-sm border-b border-dark-600/30 p-2">
       <div class="max-w-4xl mx-auto">
-        <div class="grid grid-cols-2 gap-3 text-sm">
+        <div class="grid grid-cols-2 gap-3 text-sm mb-3">
           <!-- Question Counter & Progress -->
           <div class="text-center">
             <div class="text-sm font-bold text-accent-primary mb-1">
@@ -147,6 +147,26 @@ watch(() => actions.value.currentQuestion, () => {
             <div class="text-sm font-bold text-accent-warning">
               {{ score }}%
             </div>
+          </div>
+        </div>
+        
+        <!-- Question Navigation -->
+        <div class="flex justify-center space-x-1 overflow-x-auto">
+          <div 
+            v-for="(expr, index) in expressions" 
+            :key="index"
+            :class="[
+              'w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0',
+              index === actions.currentQuestion 
+                ? 'bg-accent-primary text-white ring-2 ring-accent-primary/50' 
+                : expr.status === true
+                ? 'bg-accent-success/20 text-accent-success'
+                : expr.status === false
+                ? 'bg-accent-error/20 text-accent-error'
+                : 'bg-dark-600 text-dark-300'
+            ]"
+          >
+            {{ index + 1 }}
           </div>
         </div>
       </div>
@@ -229,30 +249,6 @@ watch(() => actions.value.currentQuestion, () => {
         <div v-else class="text-center py-12">
           <div class="spinner w-8 h-8 mx-auto mb-4"></div>
           <div class="text-dark-300">Loading next question...</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Question Navigation -->
-    <div class="bg-dark-800/20 border-t border-dark-600/30 p-1">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex justify-center space-x-1 overflow-x-auto">
-          <div 
-            v-for="(expr, index) in expressions" 
-            :key="index"
-            :class="[
-              'w-5 h-5 rounded flex items-center justify-center text-xs font-medium transition-all duration-200 flex-shrink-0',
-              index === actions.currentQuestion 
-                ? 'bg-accent-primary text-white ring-2 ring-accent-primary/50' 
-                : expr.status === true
-                ? 'bg-accent-success/20 text-accent-success'
-                : expr.status === false
-                ? 'bg-accent-error/20 text-accent-error'
-                : 'bg-dark-700 text-dark-400'
-            ]"
-          >
-            {{ index + 1 }}
-          </div>
         </div>
       </div>
     </div>

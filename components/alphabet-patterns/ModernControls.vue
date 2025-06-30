@@ -41,11 +41,11 @@ const visibleCount = computed(() => parameters.value.cols.filter(col => col).len
 <template>
   <div class="h-full flex flex-col bg-dark-800/50 backdrop-blur-sm">
     <!-- Header -->
-    <div class="p-4 border-b border-dark-600/30">
+    <div class="p-3 sm:p-4 border-b border-dark-600/30">
       <div class="flex items-center justify-between mb-1">
-        <h2 class="text-lg font-bold text-dark-50">Settings</h2>
-        <button @click="$emit('close')" class="lg:hidden icon-btn text-dark-400 hover:text-dark-200">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 class="text-base sm:text-lg font-bold text-dark-50">Settings</h2>
+        <button @click="$emit('close')" class="lg:hidden p-1 rounded hover:bg-dark-700 text-dark-400 hover:text-dark-200 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
@@ -55,10 +55,10 @@ const visibleCount = computed(() => parameters.value.cols.filter(col => col).len
     <!-- Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
       <!-- Column Visibility -->
-      <div class="p-4 border-b border-dark-600/30">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-base font-semibold text-dark-100">Columns</h3>
-          <div class="badge-primary text-xs">{{ visibleCount }}</div>
+      <div class="p-3 sm:p-4 border-b border-dark-600/30">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="text-sm sm:text-base font-semibold text-dark-100">Columns</h3>
+          <div class="bg-accent-primary/20 text-accent-primary px-2 py-1 rounded text-xs">{{ visibleCount }}</div>
         </div>
         
         <div class="space-y-2">
@@ -67,13 +67,13 @@ const visibleCount = computed(() => parameters.value.cols.filter(col => col).len
             :key="index"
             @click="toggleColumn(index)"
             :class="[
-              'cursor-pointer rounded-lg p-2 border-2 transition-all duration-300 group',
+              'cursor-pointer rounded-lg p-3 border-2 transition-all duration-300 group touch-manipulation',
               parameters.cols[index] 
                 ? 'bg-accent-primary/10 border-accent-primary/30' 
                 : 'bg-dark-700/30 border-dark-600 hover:border-dark-500'
             ]"
           >
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-3">
               <div :class="[
                 'w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300',
                 parameters.cols[index] ? 'bg-accent-primary/20' : 'bg-dark-600 group-hover:bg-dark-500'
@@ -98,7 +98,7 @@ const visibleCount = computed(() => parameters.value.cols.filter(col => col).len
       </div>
 
       <!-- Pattern Settings -->
-      <div class="p-3 border-b border-dark-600/30">
+      <div class="p-3 sm:p-4 border-b border-dark-600/30">
         <h3 class="text-sm font-semibold text-dark-100 mb-2">Questions</h3>
         
         <div>
@@ -107,20 +107,21 @@ const visibleCount = computed(() => parameters.value.cols.filter(col => col).len
             @input="updateSize($event.target.value)"
             type="number"
             min="1"
-            class="input-field w-full text-center text-xs"
+            class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
+            placeholder="Number of questions"
           >
         </div>
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="p-2 border-t border-dark-600/30 bg-dark-800/30">
+    <div class="p-3 sm:p-4 border-t border-dark-600/30 bg-dark-800/30">
       <button 
         v-if="parameters.currentQuestion > -1"
         @click="resetSession"
-        class="btn-error w-full text-xs py-1"
+        class="bg-gradient-to-r from-accent-error to-red-600 hover:from-red-600 hover:to-accent-error text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium w-full text-sm"
       >
-        Reset
+        Reset Practice
       </button>
     </div>
   </div>
