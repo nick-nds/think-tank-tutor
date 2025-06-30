@@ -198,12 +198,5 @@ const navItems = [
         class="lg:hidden fixed inset-0 bg-dark-900/50 backdrop-blur-sm -z-10"
       ></div>
     </Transition>
-
-    <!-- Settings FAB Button -->
-    <button class="fixed top-20 left-6 w-12 h-12 bg-gradient-to-r from-accent-primary to-blue-600 text-white rounded-full shadow-lg hover:shadow-accent-primary/25 transition-all duration-300 flex items-center justify-center transform hover:scale-110 active:scale-95 z-40">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-      </svg>
-    </button>
   </nav>
 </template>
