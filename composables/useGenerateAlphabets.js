@@ -12,30 +12,38 @@ export const useGenerateAlphabets = (size) => {
     throw new Error('Size must be a positive number')
   }
   
-  let availableAlphabets = [...ALPHABET_MAPPINGS]
+  // Get valid alphabets (excluding empty placeholder at index 0)
+  const validAlphabets = ALPHABET_MAPPINGS.filter(item => item[0] !== '')
+  const totalAvailable = validAlphabets.length // Should be 26
+  
+  // If requested size is <= available alphabets, ensure no repetition
+  if (parsedSize <= totalAvailable) {
+    // Shuffle all valid alphabets and take the required number
+    const shuffledAlphabets = [...validAlphabets]
+    for (let i = shuffledAlphabets.length - 1; i > 0; i--) {
+      const j = useRandomIntFromInterval(0, i)
+      ;[shuffledAlphabets[i], shuffledAlphabets[j]] = [shuffledAlphabets[j], shuffledAlphabets[i]]
+    }
+    
+    return shuffledAlphabets.slice(0, parsedSize).map(triplet => [...triplet])
+  }
+  
+  // If requested size > 26, use the original cycling logic
+  let availableAlphabets = [...validAlphabets]
   const result = []
   
   for (let i = 0; i < parsedSize; i++) {
-    // Skip the empty placeholder at index 0
-    const validAlphabets = availableAlphabets.filter(item => item[0] !== '')
-    
-    if (validAlphabets.length === 0) {
-      availableAlphabets = [...ALPHABET_MAPPINGS]
-      continue
+    if (availableAlphabets.length === 0) {
+      availableAlphabets = [...validAlphabets]
     }
     
-    const randomIndex = useRandomIntFromInterval(0, validAlphabets.length - 1)
-    const selectedTriplet = validAlphabets[randomIndex]
+    const randomIndex = useRandomIntFromInterval(0, availableAlphabets.length - 1)
+    const selectedTriplet = availableAlphabets[randomIndex]
     
     result.push([...selectedTriplet])
     
     // Remove selected item from available pool
-    const originalIndex = availableAlphabets.findIndex(item => 
-      item[0] === selectedTriplet[0] && 
-      item[1] === selectedTriplet[1] && 
-      item[2] === selectedTriplet[2]
-    )
-    availableAlphabets.splice(originalIndex, 1)
+    availableAlphabets.splice(randomIndex, 1)
   }
   
   return result

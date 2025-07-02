@@ -1,9 +1,10 @@
 <script setup>
-import { ref, provide, watchEffect, inject } from 'vue'
+import { ref, provide, watchEffect, inject, watch } from 'vue'
 import { useRandomizeArray } from '../composables/useRandomizeArray'
 import { useOperate } from '../composables/useOperate'
 import { useGenerateList } from '../composables/useGenerateList'
 import { useGenerateRootList } from '../composables/useGenerateRootList'
+import { useGenerateUniqueExpressions } from '../composables/useGenerateUniqueExpressions'
 
 const title = inject('preTitle')
 title.value = 'Operations'
@@ -108,7 +109,7 @@ const showSidebar = ref(false)
  * Generate expressions when game is active and incomplete
  */
 watchEffect(() => {
-  if (!actions.value.complete && lists.value.a.length > 0 && lists.value.b.length > 0) {
+  if (!actions.value.complete && selectedOperations.value.length > 0) {
     // Keep only expressions with status (answered questions)
     expressions.value = expressions.value.filter(expression => 
       expression.status !== null
@@ -117,28 +118,45 @@ watchEffect(() => {
     const currentCount = expressions.value.length
     const targetSize = parameters.value.size
     
-    // Generate remaining expressions only if we have enough data
-    for (let i = currentCount; i < targetSize; i++) {
-      const a = lists.value.a[i]
-      const b = lists.value.b[i]
+    // Generate remaining expressions only if we need more
+    if (currentCount < targetSize) {
+      const remainingCount = targetSize - currentCount
       
-      // Skip if data is not available
-      if (a === undefined || b === undefined) {
-        break
+      try {
+        const uniqueCombinations = useGenerateUniqueExpressions(
+          parameters.value.range.a[0],
+          parameters.value.range.a[1],
+          parameters.value.range.b[0],
+          parameters.value.range.b[1],
+          selectedOperations.value,
+          remainingCount
+        )
+        
+        uniqueCombinations.forEach(combination => {
+          expressions.value.push({
+            a: combination.a,
+            b: combination.b,
+            operator: combination.operator,
+            value: useOperate(combination.a, combination.b, combination.operator),
+            status: null,
+            answer: null,
+          })
+        })
+      } catch (error) {
+        console.warn('Failed to generate unique expressions:', error)
+        // Fallback to previous behavior if unique generation fails
+        for (let i = currentCount; i < targetSize && i < lists.value.a.length && i < lists.value.b.length; i++) {
+          const operator = useRandomizeArray(selectedOperations.value)[0]
+          expressions.value.push({
+            a: lists.value.a[i],
+            b: lists.value.b[i],
+            operator,
+            value: useOperate(lists.value.a[i], lists.value.b[i], operator),
+            status: null,
+            answer: null,
+          })
+        }
       }
-      
-      const operator = selectedOperations.value.length > 0 
-        ? useRandomizeArray(selectedOperations.value)[0] 
-        : 'add'
-      
-      expressions.value.push({
-        a,
-        b,
-        operator,
-        value: useOperate(a, b, operator),
-        status: null,
-        answer: null,
-      })
     }
   }
 })
