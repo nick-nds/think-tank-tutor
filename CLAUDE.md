@@ -21,11 +21,14 @@ npm run build
 # Preview production build
 npm run preview
 
-# Generate static files
+# Generate static files (for GitHub Pages deployment)
 npm run generate
 
 # Start production server
 npm run start
+
+# Local preview of generated static files
+npx serve dist
 ```
 
 ## Architecture Overview
@@ -35,6 +38,8 @@ npm run start
 - **Styling**: Tailwind CSS with dark mode support
 - **Icons**: nuxt-icons with custom SVG paths
 - **State Management**: Vue 3 provide/inject pattern
+- **Rendering**: SPA mode (SSR disabled) for GitHub Pages deployment
+- **Persistence**: localStorage for user settings and preferences
 - **Node.js**: Requires Node.js v16+ (tested with v22)
 
 ### Key Directories
@@ -56,6 +61,7 @@ Both main pages use Vue 3's Composition API with provide/inject for state manage
 - **Core Operations**: Addition, subtraction, multiplication, division, exponentiation, root
 - **Precision Handling**: Special rounding for division (4 decimals) vs other operations (2 decimals)
 - **Smart Generation**: Root operations use special list generation to ensure valid results
+- **Unique Questions**: When total possible combinations exceed requested size, questions are guaranteed unique (useGenerateUniqueExpressions.js)
 
 ### Component Architecture
 - **Modular Design**: Components are organized by feature with clear separation
@@ -80,3 +86,16 @@ Both main pages use Vue 3's Composition API with provide/inject for state manage
 - Operations page regenerates questions automatically when parameters change
 - Alphabet Patterns page dynamically updates display based on column selection
 - Both pages maintain session state for progress tracking and restart functionality
+- Settings automatically persist to localStorage and load on page initialization
+
+## Deployment
+
+The app is configured for automated GitHub Pages deployment via GitHub Actions:
+
+- **Workflow**: `.github/workflows/deploy.yml` deploys on push to `master` branch
+- **Build Command**: `NUXT_APP_BASE_URL=/think-tank-tutor/ npm run generate`
+- **Base URL**: Configured via environment variable for proper asset loading
+- **Static Site**: All pages pre-generated for optimal performance
+- **Manual Trigger**: Workflow can be manually triggered from GitHub Actions tab
+
+See `DEPLOYMENT.md` for detailed deployment instructions.

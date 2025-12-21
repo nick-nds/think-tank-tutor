@@ -67,6 +67,8 @@ const operations = ref({
 
 const selectedCount = computed(() => selectedOperations.value.length)
 
+const isRootSelected = computed(() => selectedOperations.value.includes('root'))
+
 const toggleOperation = (key) => {
   operations.value[key].selected = !operations.value[key].selected
   
@@ -95,6 +97,15 @@ const updateSize = (value) => {
   const numValue = parseInt(value)
   if (!isNaN(numValue) && numValue > 0 && numValue <= 100) {
     parameters.value.size = numValue
+  }
+}
+
+const updateRootType = (value) => {
+  const numValue = parseInt(value)
+  if (numValue === 2 || numValue === 3) {
+    parameters.value.rootType = numValue
+    // Trigger regeneration
+    parameters.value.regenerate = !parameters.value.regenerate
   }
 }
 
@@ -192,8 +203,8 @@ selectedOperations.value.forEach(op => {
           </div>
         </div>
 
-        <!-- Range B -->
-        <div>
+        <!-- Range B / Root Type -->
+        <div v-if="!isRootSelected">
           <label class="block text-dark-200 text-xs mb-1">B:</label>
           <div class="flex space-x-2">
             <input
@@ -209,6 +220,35 @@ selectedOperations.value.forEach(op => {
               type="number"
               class="bg-dark-800/50 border border-dark-600 text-dark-50 placeholder-dark-400 px-3 py-2 rounded-lg focus:border-accent-primary focus:outline-none transition-all w-full text-center text-sm"
             >
+          </div>
+        </div>
+
+        <!-- Root Type Selector -->
+        <div v-else>
+          <label class="block text-dark-200 text-xs mb-1">Root Type:</label>
+          <div class="flex space-x-2">
+            <button
+              @click="updateRootType(2)"
+              :class="[
+                'flex-1 px-3 py-2 rounded-lg border transition-all text-sm font-medium',
+                parameters.rootType === 2
+                  ? 'bg-cyan-400/20 border-cyan-400/50 text-cyan-400'
+                  : 'bg-dark-800/50 border-dark-600 text-dark-300 hover:border-dark-500'
+              ]"
+            >
+              Square Root (²√)
+            </button>
+            <button
+              @click="updateRootType(3)"
+              :class="[
+                'flex-1 px-3 py-2 rounded-lg border transition-all text-sm font-medium',
+                parameters.rootType === 3
+                  ? 'bg-cyan-400/20 border-cyan-400/50 text-cyan-400'
+                  : 'bg-dark-800/50 border-dark-600 text-dark-300 hover:border-dark-500'
+              ]"
+            >
+              Cube Root (³√)
+            </button>
           </div>
         </div>
       </div>
@@ -232,7 +272,7 @@ selectedOperations.value.forEach(op => {
 
     <!-- Actions -->
     <div class="p-3 sm:p-4 border-t border-dark-600/30 bg-dark-800/30">
-      <button 
+      <button
         v-if="actions.currentQuestion > -1"
         @click="restart"
         class="bg-gradient-to-r from-accent-error to-red-600 hover:from-red-600 hover:to-accent-error text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium w-full text-sm"

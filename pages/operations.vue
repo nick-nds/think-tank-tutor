@@ -22,7 +22,8 @@ const loadOperationsSettings = () => {
           range: parsed.range || { a: [1, 10], b: [1, 10] },
           size: parseInt(parsed.size) || 10,
           regenerate: false, // Always reset regenerate flag
-          selectedOperations: parsed.selectedOperations || []
+          selectedOperations: parsed.selectedOperations || [],
+          rootType: parseInt(parsed.rootType) || 2 // Default to square root
         }
       }
     } catch (error) {
@@ -33,7 +34,8 @@ const loadOperationsSettings = () => {
     range: { a: [1, 10], b: [1, 10] },
     size: 10,
     regenerate: false,
-    selectedOperations: []
+    selectedOperations: [],
+    rootType: 2 // Default to square root
   }
 }
 
@@ -47,6 +49,7 @@ const saveOperationsSettings = (params, operations) => {
         range: params.range,
         size: params.size,
         selectedOperations: operations,
+        rootType: params.rootType,
         // Don't save regenerate flag
       }
       localStorage.setItem('operations-settings', JSON.stringify(toSave))
@@ -67,7 +70,8 @@ const initialSettings = loadOperationsSettings()
 const parameters = ref({
   range: initialSettings.range,
   size: initialSettings.size,
-  regenerate: initialSettings.regenerate
+  regenerate: initialSettings.regenerate,
+  rootType: initialSettings.rootType
 })
 
 /**
@@ -123,11 +127,16 @@ watchEffect(() => {
       const remainingCount = targetSize - currentCount
       
       try {
+        // For root operation, use rootType instead of range.b
+        const hasRoot = selectedOperations.value.includes('root')
+        const bMin = hasRoot ? parameters.value.rootType : parameters.value.range.b[0]
+        const bMax = hasRoot ? parameters.value.rootType : parameters.value.range.b[1]
+
         const uniqueCombinations = useGenerateUniqueExpressions(
           parameters.value.range.a[0],
           parameters.value.range.a[1],
-          parameters.value.range.b[0],
-          parameters.value.range.b[1],
+          bMin,
+          bMax,
           selectedOperations.value,
           remainingCount
         )
@@ -167,29 +176,37 @@ watchEffect(() => {
 watchEffect(() => {
   // Trigger on regenerate flag changes
   parameters.value.regenerate
-  
-  // Generate operand B list
-  lists.value.b = useGenerateList(
-    parameters.value.range.b[0], 
-    parameters.value.range.b[1], 
-    parameters.value.size
-  )
-  
+
+  // Check if root operation is selected
+  const hasRoot = selectedOperations.value.includes('root')
+
+  // Generate operand B list - use rootType for root operations
+  if (hasRoot) {
+    // For root operations, B is always the rootType value
+    lists.value.b = Array(parameters.value.size).fill(parameters.value.rootType)
+  } else {
+    lists.value.b = useGenerateList(
+      parameters.value.range.b[0],
+      parameters.value.range.b[1],
+      parameters.value.size
+    )
+  }
+
   // Generate operand A list (special handling for root operations)
-  const isOnlyRootOperation = selectedOperations.value.length === 1 
+  const isOnlyRootOperation = selectedOperations.value.length === 1
     && selectedOperations.value[0] === 'root'
-    
+
   if (isOnlyRootOperation) {
     lists.value.a = useGenerateRootList(
-      parameters.value.range.a[0], 
-      parameters.value.range.a[1], 
-      lists.value.b, 
+      parameters.value.range.a[0],
+      parameters.value.range.a[1],
+      lists.value.b,
       parameters.value.size
     )
   } else {
     lists.value.a = useGenerateList(
-      parameters.value.range.a[0], 
-      parameters.value.range.a[1], 
+      parameters.value.range.a[0],
+      parameters.value.range.a[1],
       parameters.value.size
     )
   }
