@@ -41,6 +41,62 @@ export const useGenerateRootList = (minimum, maximum, roots, size) => {
 }
 
 /**
+ * Enumerates all perfect powers within a specified range
+ * Auto-expands range if no perfect powers exist
+ * @param {number|string} minimum - Minimum value for the range
+ * @param {number|string} maximum - Maximum value for the range
+ * @param {number|string} root - Root value for the power (e.g., 2 for square, 3 for cube)
+ * @returns {Object} Object containing values array and expansion info
+ */
+export const useEnumeratePerfectPowers = (minimum, maximum, root) => {
+  const parsedMin = parseInt(minimum)
+  const parsedMax = parseInt(maximum)
+  const parsedRoot = parseInt(root)
+
+  if (isNaN(parsedMin) || isNaN(parsedMax)) {
+    throw new Error('Minimum and maximum must be valid numbers')
+  }
+  if (isNaN(parsedRoot) || parsedRoot <= 0) {
+    throw new Error('Root must be a positive number')
+  }
+
+  const [min, max] = useSortMinMax(parsedMin, parsedMax)
+
+  // Calculate base range
+  let minBase = Math.ceil(min ** (1 / parsedRoot))
+  let maxBase = Math.floor(max ** (1 / parsedRoot))
+
+  // Auto-expand if no perfect powers in range
+  if (minBase > maxBase) {
+    minBase = Math.floor(min ** (1 / parsedRoot))
+    maxBase = Math.ceil(max ** (1 / parsedRoot))
+
+    // Ensure at least base 1 exists
+    if (minBase === 0 && maxBase === 0) {
+      minBase = 1
+      maxBase = 1
+    }
+    // If still invalid, ensure at least one base
+    if (minBase > maxBase) {
+      minBase = 1
+      maxBase = 1
+    }
+  }
+
+  // Generate all perfect powers
+  const values = []
+  for (let base = minBase; base <= maxBase; base++) {
+    values.push(base ** parsedRoot)
+  }
+
+  return {
+    values: values,
+    expandedMin: minBase ** parsedRoot,
+    expandedMax: maxBase ** parsedRoot
+  }
+}
+
+/**
  * Generates a random perfect power within the specified range
  * @param {number} minimum - Minimum value for the range
  * @param {number} maximum - Maximum value for the range
@@ -50,11 +106,11 @@ export const useGenerateRootList = (minimum, maximum, roots, size) => {
 const generatePerfectPower = (minimum, maximum, root) => {
   const minBase = Math.ceil(minimum ** (1 / root))
   const maxBase = Math.floor(maximum ** (1 / root))
-  
+
   if (minBase > maxBase) {
     throw new Error(`No valid perfect ${root}th powers exist in range [${minimum}, ${maximum}]`)
   }
-  
+
   const base = useRandomIntFromInterval(minBase, maxBase)
   return base ** root
 }

@@ -28,25 +28,35 @@ export const useGenerateAlphabets = (size) => {
     return shuffledAlphabets.slice(0, parsedSize).map(triplet => [...triplet])
   }
   
-  // If requested size > 26, use the original cycling logic
-  let availableAlphabets = [...validAlphabets]
-  const result = []
-  
-  for (let i = 0; i < parsedSize; i++) {
-    if (availableAlphabets.length === 0) {
-      availableAlphabets = [...validAlphabets]
+  // If requested size > 26, create fair duplicates then shuffle
+  const pool = []
+  const timesEach = Math.floor(parsedSize / validAlphabets.length)
+  const remainder = parsedSize % validAlphabets.length
+
+  // Add each alphabet triplet the calculated number of times
+  for (const triplet of validAlphabets) {
+    for (let i = 0; i < timesEach; i++) {
+      pool.push([...triplet])
     }
-    
-    const randomIndex = useRandomIntFromInterval(0, availableAlphabets.length - 1)
-    const selectedTriplet = availableAlphabets[randomIndex]
-    
-    result.push([...selectedTriplet])
-    
-    // Remove selected item from available pool
-    availableAlphabets.splice(randomIndex, 1)
   }
-  
-  return result
+
+  // Add remainder items: shuffle alphabets and take first N
+  const shuffledForRemainder = [...validAlphabets]
+  for (let i = shuffledForRemainder.length - 1; i > 0; i--) {
+    const j = useRandomIntFromInterval(0, i)
+    ;[shuffledForRemainder[i], shuffledForRemainder[j]] = [shuffledForRemainder[j], shuffledForRemainder[i]]
+  }
+  for (let i = 0; i < remainder; i++) {
+    pool.push([...shuffledForRemainder[i]])
+  }
+
+  // Shuffle entire pool for random distribution
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = useRandomIntFromInterval(0, i)
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+
+  return pool
 }
 
 /**

@@ -133,7 +133,42 @@ const getOperationSymbol = (op) => {
             </svg>
           </div>
           <h1 class="text-2xl sm:text-3xl font-bold text-dark-50 mb-2">Session Complete!</h1>
-          <p class="text-sm sm:text-base text-dark-200 mb-4">Great job on your rapid practice session</p>
+          <p class="text-sm sm:text-base text-dark-200 mb-6">Great job on your rapid practice session</p>
+
+          <!-- Quick Actions -->
+          <div :class="isLoaded ? 'animate-fade-in' : 'opacity-0'" style="animation-delay: 0.3s;">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mb-4">
+              <button
+                @click="restart"
+                class="bg-gradient-to-r from-accent-primary to-blue-600 hover:from-blue-600 hover:to-accent-primary text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-primary/25 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+                </svg>
+                <span>Try Again</span>
+              </button>
+
+              <button
+                @click="startNew"
+                class="bg-dark-700 hover:bg-dark-600 text-dark-100 px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-dark-600 hover:border-dark-500 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                </svg>
+                <span>New Session</span>
+              </button>
+            </div>
+
+            <NuxtLink
+              to="/"
+              class="text-dark-300 hover:text-dark-100 text-sm font-medium transition-all duration-300 inline-flex items-center gap-2 hover:gap-3"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"></path>
+              </svg>
+              <span>Back to Home</span>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
@@ -190,7 +225,7 @@ const getOperationSymbol = (op) => {
       <!-- Question Review -->
       <div :class="isLoaded ? 'animate-slide-up' : 'opacity-0'" style="animation-delay: 0.6s;" class="mb-6 sm:mb-8">
         <h2 class="text-lg sm:text-xl font-bold text-dark-50 text-center mb-3 sm:mb-4">Question Review</h2>
-        <div class="max-w-3xl mx-auto space-y-2">
+        <div class="max-w-3xl mx-auto space-y-2 max-h-64 sm:max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-dark-600 scrollbar-track-dark-800/50">
           <div 
             v-for="(expr, index) in expressions" 
             :key="index"
@@ -229,47 +264,6 @@ const getOperationSymbol = (op) => {
                 {{ expr.value }}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div :class="isLoaded ? 'animate-fade-in' : 'opacity-0'" style="animation-delay: 0.8s;" class="text-center pb-6">
-        <div class="space-y-4 max-w-md mx-auto">
-          <!-- Primary Actions -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button 
-              @click="restart" 
-              class="bg-gradient-to-r from-accent-primary to-blue-600 hover:from-blue-600 hover:to-accent-primary text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium shadow-lg hover:shadow-accent-primary/25 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
-              </svg>
-              <span>Try Again</span>
-            </button>
-            
-            <button 
-              @click="startNew" 
-              class="bg-dark-600 hover:bg-dark-500 text-dark-100 px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-dark-500 hover:border-dark-400 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 touch-manipulation"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-              </svg>
-              <span>New Session</span>
-            </button>
-          </div>
-          
-          <!-- Secondary Action -->
-          <div class="pt-2">
-            <NuxtLink 
-              to="/" 
-              class="text-dark-200 hover:text-dark-50 px-6 py-3 rounded-xl transition-all duration-300 font-medium hover:bg-dark-700/50 border border-transparent hover:border-dark-600 inline-flex items-center gap-2 touch-manipulation"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"></path>
-              </svg>
-              <span>Back to Home</span>
-            </NuxtLink>
           </div>
         </div>
       </div>

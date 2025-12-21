@@ -3,7 +3,7 @@ import { ref, provide, watchEffect, inject, watch } from 'vue'
 import { useRandomizeArray } from '../composables/useRandomizeArray'
 import { useOperate } from '../composables/useOperate'
 import { useGenerateList } from '../composables/useGenerateList'
-import { useGenerateRootList } from '../composables/useGenerateRootList'
+import { useGenerateRootList, useEnumeratePerfectPowers } from '../composables/useGenerateRootList'
 import { useGenerateUniqueExpressions } from '../composables/useGenerateUniqueExpressions'
 
 const title = inject('preTitle')
@@ -132,13 +132,39 @@ watchEffect(() => {
         const bMin = hasRoot ? parameters.value.rootType : parameters.value.range.b[0]
         const bMax = hasRoot ? parameters.value.rootType : parameters.value.range.b[1]
 
+        // Detect root-only mode for perfect power generation
+        const isOnlyRootOperation = selectedOperations.value.length === 1
+          && selectedOperations.value[0] === 'root'
+
+        let validOperandAValues = null
+
+        // Generate perfect powers for root-only mode
+        if (isOnlyRootOperation) {
+          const perfectPowerData = useEnumeratePerfectPowers(
+            parameters.value.range.a[0],
+            parameters.value.range.a[1],
+            parameters.value.rootType
+          )
+          validOperandAValues = perfectPowerData.values
+
+          // Log info if range was auto-expanded
+          if (perfectPowerData.expandedMin < parameters.value.range.a[0] ||
+              perfectPowerData.expandedMax > parameters.value.range.a[1]) {
+            console.info(
+              `Range auto-expanded to include perfect ${parameters.value.rootType}${parameters.value.rootType === 2 ? 'nd' : 'rd'} powers: ` +
+              `[${perfectPowerData.expandedMin}, ${perfectPowerData.expandedMax}]`
+            )
+          }
+        }
+
         const uniqueCombinations = useGenerateUniqueExpressions(
           parameters.value.range.a[0],
           parameters.value.range.a[1],
           bMin,
           bMax,
           selectedOperations.value,
-          remainingCount
+          remainingCount,
+          validOperandAValues
         )
         
         uniqueCombinations.forEach(combination => {
