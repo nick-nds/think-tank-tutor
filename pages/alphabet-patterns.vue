@@ -1,5 +1,5 @@
 <script setup>
-import { ref, inject, provide, computed, watchEffect } from 'vue'
+import { ref, inject, provide, computed, watchEffect, watch } from 'vue'
 import { ALPHABET_MAPPINGS } from '../composables/useGenerateAlphabets'
 import { useGenerateAlphabets } from '../composables/useGenerateAlphabets'
 import { useRandomIntFromInterval } from '../composables/useRandomIntFromInterval'
@@ -92,15 +92,9 @@ const getActiveCols = () => {
 }
 
 /**
- * Computed matrix of alphabet triplets based on current size
+ * Generated alphabet triplets - stored as ref to generate once
  */
-const matrix = computed(() => {
-  // Trigger reactivity on relevant parameter changes
-  parameters.value.size
-  parameters.value.currentQuestion
-  parameters.value.end
-  return useGenerateAlphabets(parameters.value.size)
-})
+const matrix = ref([])
 
 /**
  * Transforms a row based on column visibility and randomization settings
@@ -109,17 +103,17 @@ const matrix = computed(() => {
  */
 const transformRow = (row) => {
   const activeCols = getActiveCols()
-  
+
   if (parameters.value.random) {
-    const randomCols = activeCols.map(() => 
+    const randomCols = activeCols.map(() =>
       useRandomIntFromInterval(0, parameters.value.cols.length - 1)
     )
-    return row.map((item, index) => 
+    return row.map((item, index) =>
       randomCols.includes(index) ? item : null
     )
   }
-  
-  return row.map((item, index) => 
+
+  return row.map((item, index) =>
     activeCols.includes(index) ? item : null
   )
 }
@@ -132,6 +126,20 @@ const expressions = computed(() => {
 })
 
 const attempted = ref([])
+
+/**
+ * Generate alphabet matrix when size changes or session starts
+ * Similar to operations mode - generate once, preserve throughout session
+ */
+watchEffect(() => {
+  // Only regenerate if: not in active session OR explicit parameter change
+  const shouldRegenerate = parameters.value.currentQuestion === -1 ||
+                           parameters.value.end === true
+
+  if (shouldRegenerate && parameters.value.size > 0) {
+    matrix.value = useGenerateAlphabets(parameters.value.size)
+  }
+})
 
 /**
  * Controls panel visibility for mobile
